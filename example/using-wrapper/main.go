@@ -21,7 +21,7 @@ func task(msg string) func() (int, error) {
 
 func main() {
 	log.Println("start async task")
-	future := async.Go(async.Wrap(task("hello world")).Get())
+	future := async.Go(async.Wrap(task("hello world")))
 
 	log.Println("waiting task to finish")
 

@@ -43,18 +43,8 @@ func Go[Fn ReturnType[T], T any](f AsyncFunc[Fn, T]) *Future[Fn, T] {
 	return r.future
 }
 
-type wrapper[Fn ReturnType[T], T any] struct {
-	fn AsyncFunc[Fn, T]
-}
-
-func Wrap[T any](fn ReturnType[T]) *wrapper[ReturnType[T], T] {
-	return &wrapper[ReturnType[T], T]{
-		fn: func() ReturnType[T] {
-			return fn
-		},
+func Wrap[T any](fn ReturnType[T]) AsyncFunc[ReturnType[T], T] {
+	return func() ReturnType[T] {
+		return fn
 	}
-}
-
-func (w *wrapper[Fn, T]) Get() AsyncFunc[Fn, T] {
-	return w.fn
 }
